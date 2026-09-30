@@ -10,7 +10,7 @@ The **Online Local Mart System (OLMS)** is designed to digitize local mart inven
 
 ---
 
-## Team Members
+## Team Members (Group 7)
 
 | Name | Role | GitHub Profile |
 | :--- | :--- | :--- |
