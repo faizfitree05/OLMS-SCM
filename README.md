@@ -15,7 +15,7 @@ The **Online Local Mart System (OLMS)** is designed to digitize local mart inven
 | Name | Role | GitHub Profile |
 | :--- | :--- | :--- |
 | **Muhammad Faiz Fitree bin Zuffree** | Team Lead / Software Developer | [@faizfitree05](https://github.com/faizfitree05) |
-| **Ts. Dr. Loo Yim Ling** | Assessing Lecturer | [@YimLingLoo](https://github.com/YimLingLoo) |
+| **Ts. Dr. Loo Yim Ling** | Lecturer | [@YimLingLoo](https://github.com/YimLingLoo) |
 
 ---
 
