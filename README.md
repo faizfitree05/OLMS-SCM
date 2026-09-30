@@ -6,7 +6,7 @@
 ---
 
 ## 📌 Project Overview
-The **Online Local Mart System (OLMS)** is designed to digitize local mart inventory management and ordering processes. This system provides core functionalities for managing products, tracking inventory levels, processing orders, and handling user accounts efficiently while adhering to software engineering best practices, modularity, and clean code principles.
+The **Online Local Mart System (OLMS)** is designed to digitize local mart inventory management and ordering processes. THis system provides core functions for managing products, tracking inventory levels, processing orders and handling user accounts efficiently.
 
 ---
 
