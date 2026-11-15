@@ -1,0 +1,14 @@
+{
+  "name": "scm-grocery-system",
+  "version": "2.0.0",
+  "description": "CSEB5223 Group 7 - Supply Chain Management (grocery) system",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js lab5",
+    "demo:integration": "node main.js lab5",
+    "demo:defensive": "node main.js lab7",
+    "demo:api": "node main.js lab8"
+  },
+  "engines": { "node": ">=20" }
+}
