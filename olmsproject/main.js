@@ -1,29 +1,25 @@
-import { ProductService } from "./product-service.js";
-import { OrderItem, Order } from "./order-model.js";
-import { User } from "./user-model.js";
+import { createLab5Context, lab5Scenarios } from './demo/lab5-scenarios.js';
+import { createLab7Context, lab7Scenarios } from './demo/lab7-scenarios.js';
+import { createLab8Context, lab8Scenarios } from './demo/lab8-scenarios.js';
 
-const service = new ProductService();
+const DEMOS = {
+  lab5: { create: createLab5Context, scenarios: lab5Scenarios },
+  lab7: { create: createLab7Context, scenarios: lab7Scenarios },
+  lab8: { create: createLab8Context, scenarios: lab8Scenarios },
+};
 
-// Search, Edit and Delete display the full updated record set automatically.
+async function runDemo(name) {
+  const demo = DEMOS[name];
+  if (!demo) {
+    console.log(`Unknown demo "${name}". Use one of: ${Object.keys(DEMOS).join(', ')}`);
+    return;
+  }
+  const context = await demo.create();
+  for (const scenario of demo.scenarios) {
+    console.log(`\n===== ${scenario.title} =====`);
+    await scenario.run(context);
+  }
+  if (context.close) await context.close();
+}
 
-service.createProduct({ productId: "P001", productName: "Fresh Milk 1L", category: "Dairy", price: 7.9, stockQuantity: 40 });
-service.createProduct({ productId: "P002", productName: "Wholemeal Bread", category: "Bakery", price: 4.5, stockQuantity: 25 });
-service.createProduct({ productId: "P003", productName: "Red Apples 1kg", category: "Produce", price: 9.9, stockQuantity: 60 });
-service.createProduct({ productId: "P001", productName: "Duplicate", category: "Dairy", price: 1, stockQuantity: 1 }); // fails
-service.createProduct({ productId: "P004", productName: "Bad Price", category: "Dairy", price: -2, stockQuantity: 1 }); // fails
-service.displayProducts();
-
-service.searchProducts("dairy");
-service.searchProducts("xyz"); // not found
-
-service.editProduct("P002", { price: 5.2, stockQuantity: 18 });
-service.editProduct("P003", { stockQuantity: -5 }); // fails
-
-service.deleteProduct("P003");        // asks for confirmation
-service.deleteProduct("P003", true);  // deletes
-
-// --- Order / User demo ---
-const customer = new User({ userId: "U001", name: "Aina", email: "aina@example.com", role: "CUSTOMER" });
-const order = new Order("O001", [new OrderItem("P001", 2, 7.9), new OrderItem("P002", 1, 5.2)]);
-order.updateStatus("PROCESSING");
-console.log(`\nOrder ${order.orderId} for ${customer.name}: ${order.status}, total RM${order.totalAmount.toFixed(2)}`);
+await runDemo(process.argv[2] ?? 'lab5');

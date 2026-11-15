@@ -1,8 +1,12 @@
-import { requireNonEmptyString, requireNonNegativeNumber, requireInteger } from "./validators.js";
+import {
+  MAX_CATEGORY_LENGTH, MAX_PRODUCT_NAME_LENGTH, MAX_STOCK_LIMIT,
+} from './constants.js';
+import { requirePlainObject } from './input-guard.js';
+import {
+  requireId, requireIntegerInRange, requireMaxLength, requireMoney, requireNonEmptyString,
+} from './validators.js';
 
-const MAX_PRODUCT_NAME_LENGTH = 150;
-
-/** Product entity: private fields, validated getters/setters. */
+/** Product entity. All fields are private; changes go through validating setters. */
 export class Product {
   #productId;
   #productName;
@@ -11,7 +15,8 @@ export class Product {
   #stockQuantity;
 
   constructor(productData) {
-    this.#productId = requireNonEmptyString(productData.productId, "productId");
+    requirePlainObject(productData, 'productData');
+    this.#productId = requireId(productData.productId, 'productId');
     this.productName = productData.productName;
     this.category = productData.category;
     this.price = productData.price;
@@ -19,24 +24,34 @@ export class Product {
   }
 
   get productId() { return this.#productId; }
-
   get productName() { return this.#productName; }
-  set productName(newProductName) {
-    this.#productName = requireNonEmptyString(newProductName, "productName", MAX_PRODUCT_NAME_LENGTH);
-  }
-
   get category() { return this.#category; }
-  set category(newCategory) {
-    this.#category = requireNonEmptyString(newCategory, "category");
-  }
-
   get price() { return this.#price; }
-  set price(newPrice) {
-    this.#price = requireNonNegativeNumber(newPrice, "price");
+  get stockQuantity() { return this.#stockQuantity; }
+
+  set productName(value) {
+    const name = requireNonEmptyString(value, 'productName');
+    this.#productName = requireMaxLength(name, MAX_PRODUCT_NAME_LENGTH, 'productName');
   }
 
-  get stockQuantity() { return this.#stockQuantity; }
-  set stockQuantity(newStockQuantity) {
-    this.#stockQuantity = requireInteger(newStockQuantity, "stockQuantity", 0);
+  set category(value) {
+    const category = requireNonEmptyString(value, 'category');
+    this.#category = requireMaxLength(category, MAX_CATEGORY_LENGTH, 'category');
+  }
+
+  set price(value) { this.#price = requireMoney(value, 'price'); }
+
+  set stockQuantity(value) {
+    this.#stockQuantity = requireIntegerInRange(value, 0, MAX_STOCK_LIMIT, 'stockQuantity');
+  }
+
+  toJSON() {
+    return {
+      productId: this.#productId,
+      productName: this.#productName,
+      category: this.#category,
+      price: this.#price,
+      stockQuantity: this.#stockQuantity,
+    };
   }
 }
