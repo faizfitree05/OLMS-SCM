@@ -47,4 +47,28 @@ Functions stay under 30 lines. Search, edit and delete display the full updated 
 
 ---
 
+## API summary 
+
+Send `x-user-id: <userId>` with every request except `GET /api/health`.
+
+| Method | Path | Roles |
+|---|---|---|
+| GET | `/api/products[?search=]`, `/api/products/:id` | ADMIN, CUSTOMER, DRIVER |
+| POST / PATCH / DELETE | `/api/products`, `/api/products/:id[?confirm=true]` | ADMIN |
+| GET | `/api/users` | ADMIN |
+| GET | `/api/orders`, `/api/orders/:id` | all (customers see only their own) |
+| POST | `/api/orders` | CUSTOMER |
+| PATCH | `/api/orders/:id/status` | ADMIN (any), DRIVER (SHIPPED/DELIVERED), CUSTOMER (cancel own) |
+
+---
+
+## Run
+
+```
+node main.js lab5    # Lab 5-6: CRUD for User, Product, Order + system integration demo
+node main.js lab7    # Lab 7-8: defensive programming demo (hostile input, business rules)
+node main.js lab8    # Lab 7-8: REST API + middleware demo (starts a local server, sends real requests)
+```
+
+---
 
